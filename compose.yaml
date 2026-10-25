@@ -1,0 +1,33 @@
+services:
+  api:
+    build: ./backend
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite:////app/data/beseen.db
+      WORKER_LOCK: /app/data/worker.lock
+    volumes: ["beseen-data:/app/data"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  worker:
+    build: ./backend
+    command: ["python", "-m", "app.worker"]
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite:////app/data/beseen.db
+      WORKER_LOCK: /app/data/worker.lock
+    volumes: ["beseen-data:/app/data"]
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+  web:
+    build: ./frontend
+    ports: ["127.0.0.1:8080:80"]
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+volumes:
+  beseen-data:

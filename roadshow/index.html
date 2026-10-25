@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>被看见 · 项目路演</title>
+  <link rel="icon" href="assets/favicon.svg" />
+  <style>
+    :root{--bg:#000;--panel:#111416;--ink:#f4f6fa;--muted:#9aa3ad;--cyan:#62dfe8;--cyan2:#b6f8ff;--amber:#f0b86a;--line:#263035;--pad:clamp(28px,4.8vw,82px);font-family:Manrope,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;color-scheme:dark}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);width:100%;height:100%;overflow:hidden}button{font:inherit}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 74% 42%,rgba(98,223,232,.09),transparent 28%),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:auto,72px 72px,72px 72px;mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 88%,transparent)}
+    .deck{position:relative;width:100%;height:100%}.slide{position:absolute;inset:0;overflow:hidden;padding:clamp(56px,6vh,90px) var(--pad) clamp(64px,7vh,96px);display:grid;grid-template-rows:auto 1fr;gap:clamp(24px,4vh,48px);opacity:0;visibility:hidden;transform:translate3d(3%,0,0) scale(.985);transition:opacity .42s ease,transform .55s cubic-bezier(.2,.8,.2,1),visibility .42s}.slide.active{opacity:1;visibility:visible;transform:none}.slide.prev{transform:translate3d(-3%,0,0) scale(.985)}
+    .topline{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:28px;color:var(--muted);font-size:clamp(10px,.8vw,13px);letter-spacing:.1em;text-transform:uppercase}.brand{display:flex;align-items:center;gap:12px;color:var(--ink);letter-spacing:.04em;text-transform:none;font-weight:700}.brand img{width:26px;height:26px}.brand small{display:block;color:var(--cyan);font-size:8px;font-weight:500;letter-spacing:.12em}.eyebrow{color:var(--cyan);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(10px,.72vw,12px)}
+    h1,h2,h3,p{margin:0}h1{font-size:clamp(54px,7vw,118px);line-height:.98;letter-spacing:-.065em;font-weight:560}h2{font-size:clamp(38px,4.2vw,72px);line-height:1.06;letter-spacing:-.055em;font-weight:540}h3{font-size:clamp(19px,1.55vw,28px);line-height:1.35;font-weight:560}.lead{font-size:clamp(18px,1.65vw,28px);line-height:1.65;color:#c9d0d6;max-width:760px}.muted{color:var(--muted)}.cyan{color:var(--cyan)}.amber{color:var(--amber)}.nowrap{white-space:nowrap}
+    .content{min-height:0;display:grid;align-items:center}.split{grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(34px,5vw,92px)}.split.even{grid-template-columns:1fr 1fr}.stack{display:flex;flex-direction:column;gap:clamp(18px,2.5vh,30px)}.copy{max-width:720px}.big-quote{font-size:clamp(31px,3.4vw,58px);line-height:1.25;letter-spacing:-.04em;max-width:920px}.rule{height:1px;background:linear-gradient(90deg,var(--cyan),var(--line) 32%,transparent);margin:4px 0}.kicker{font-size:clamp(13px,1vw,17px);color:var(--cyan);line-height:1.7}.caption{font-size:clamp(10px,.78vw,13px);color:#7e8b96;line-height:1.6}.source-note{position:absolute;left:var(--pad);bottom:22px;color:#68737c;font-size:10px}
+    .hero{grid-template-rows:1fr}.hero .topline{position:absolute;left:var(--pad);right:var(--pad);top:34px}.hero-copy{align-self:center;position:relative;z-index:2;max-width:1120px}.hero-copy .lead{margin-top:30px}.hero .orb{position:absolute;width:min(48vw,760px);aspect-ratio:1;right:-6vw;top:6vh;border-radius:50%;background:radial-gradient(circle,rgba(98,223,232,.26) 0 1%,rgba(98,223,232,.12) 1.5%,rgba(98,223,232,.03) 28%,transparent 62%);filter:blur(.2px);opacity:.9}.hero .orb:after{content:"";position:absolute;inset:22%;border:1px solid rgba(98,223,232,.22);border-radius:50%;box-shadow:0 0 110px rgba(98,223,232,.13)}.cover-meta{display:flex;align-items:center;gap:28px;margin-top:42px;color:var(--muted);font-size:13px}.pulse{width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 22px var(--cyan)}
+    .problem-lines{display:grid;gap:22px}.problem{display:grid;grid-template-columns:72px 1fr;gap:20px;align-items:start;padding:22px 0;border-top:1px solid var(--line)}.problem b{font-size:13px;color:var(--cyan);font-variant-numeric:tabular-nums}.problem p{font-size:clamp(19px,1.6vw,28px);line-height:1.45}.signal{display:grid;place-items:center;min-height:420px;position:relative}.signal strong{font-size:clamp(86px,11vw,190px);letter-spacing:-.08em;color:var(--cyan);font-weight:500;text-shadow:0 0 60px rgba(98,223,232,.18)}.signal span{position:absolute;max-width:220px;color:var(--muted);font-size:13px;line-height:1.7}.signal .s1{top:12%;left:4%}.signal .s2{right:2%;top:35%}.signal .s3{left:18%;bottom:10%}
+    .flow{display:grid;grid-template-columns:repeat(4,1fr);align-items:start;gap:0;margin-top:12px}.flow-step{position:relative;padding:28px 28px 22px 0;border-top:1px solid var(--line);min-height:210px}.flow-step:after{content:"";position:absolute;top:-3px;left:0;width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}.flow-step b{display:block;color:var(--cyan);font-size:12px;margin-bottom:28px}.flow-step h3{margin-bottom:12px}.flow-step p{color:var(--muted);font-size:14px;line-height:1.7;max-width:240px}
+    .screen{background:#050606;border:1px solid #2b3438;border-radius:16px;overflow:hidden;box-shadow:0 24px 90px rgba(0,0,0,.72),0 0 40px rgba(98,223,232,.06);position:relative}.screen img{display:block;width:100%;height:100%;object-fit:cover}.screen:before{content:"演示环境截图";position:absolute;z-index:2;right:14px;bottom:12px;padding:6px 9px;border-radius:4px;background:rgba(0,0,0,.78);color:#90a0a8;font-size:10px;letter-spacing:.08em}.screen.tall{height:min(66vh,690px)}.screen.hero-shot{height:min(66vh,680px)}.screen.detail{height:min(68vh,710px)}
+    .metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-block:1px solid var(--line);margin-top:8px}.metric{padding:26px 22px 24px 0}.metric+.metric{padding-left:22px;border-left:1px solid var(--line)}.metric strong{display:block;color:var(--cyan);font-size:clamp(38px,4vw,64px);font-weight:500;letter-spacing:-.06em;font-variant-numeric:tabular-nums}.metric span{color:var(--muted);font-size:12px;line-height:1.5}.metric small{display:block;margin-top:7px;color:#68737c;font-size:10px}
+    .evidence-list{display:grid;gap:4px}.evidence-item{display:grid;grid-template-columns:42px 1fr;gap:20px;padding:20px 0;border-top:1px solid var(--line)}.evidence-item .num{color:var(--cyan);font-size:12px}.evidence-item h3{font-size:clamp(18px,1.35vw,24px);margin-bottom:6px}.evidence-item p{color:var(--muted);line-height:1.7;font-size:13px}
+    .architecture{display:grid;grid-template-columns:1fr 1.25fr 1fr 1fr;gap:10px;align-items:stretch}.arch{border-top:2px solid var(--cyan);background:linear-gradient(180deg,rgba(98,223,232,.08),rgba(98,223,232,.015));padding:24px;min-height:270px}.arch:nth-child(even){border-color:#8190a0;background:linear-gradient(180deg,rgba(129,144,160,.09),transparent)}.arch b{font-size:11px;color:var(--cyan);letter-spacing:.1em}.arch h3{margin:28px 0 14px}.arch p{font-size:13px;line-height:1.75;color:var(--muted)}.arch small{display:block;margin-top:24px;color:#71808a;font-size:10px;line-height:1.6}
+    .status-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:stretch}.proof{border-top:1px solid var(--line);padding:26px 0}.proof strong{display:block;font-size:clamp(44px,5vw,82px);color:var(--cyan);font-weight:500;letter-spacing:-.06em}.proof h3{margin:8px 0 10px}.proof p{color:var(--muted);font-size:13px;line-height:1.75}.open-work{border:1px solid #3c3328;background:linear-gradient(145deg,rgba(240,184,106,.1),transparent 55%);padding:34px}.open-work .eyebrow{color:var(--amber)}.open-work ul{list-style:none;margin:28px 0 0;padding:0}.open-work li{padding:18px 0;border-top:1px solid rgba(240,184,106,.22);font-size:15px;line-height:1.55}.open-work li span{display:block;margin-top:4px;color:#aa9880;font-size:11px}
+    .pilot{display:grid;grid-template-columns:1.2fr 1fr;gap:70px}.pilot-path{display:grid;gap:0}.pilot-step{display:grid;grid-template-columns:58px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--line)}.pilot-step b{color:var(--cyan);font-size:12px}.pilot-step p{color:var(--muted);margin-top:6px;font-size:13px;line-height:1.65}.deliverable{align-self:center;padding:34px;border:1px solid #354247;background:rgba(17,20,22,.84)}.deliverable h3{margin:10px 0 22px}.deliverable p{padding:14px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.55}.deliverable small{color:var(--muted)}
+    .closing-copy{text-align:center;max-width:1120px;margin:auto}.closing-copy .lead{margin:28px auto 0}.closing-mark{width:70px;height:70px;margin:0 auto 38px;filter:drop-shadow(0 0 28px rgba(98,223,232,.28))}.closing-line{width:180px;height:1px;background:var(--cyan);margin:42px auto 0;box-shadow:0 0 18px var(--cyan)}
+    .chrome{position:fixed;inset:0;pointer-events:none;z-index:20}.progress{position:absolute;left:0;top:0;height:2px;background:var(--cyan);box-shadow:0 0 14px var(--cyan);transition:width .45s}.controls{position:absolute;right:22px;bottom:18px;display:flex;align-items:center;gap:7px;pointer-events:auto}.controls button{width:38px;height:38px;border:1px solid #2c3438;background:#0d1012;color:#d9e1e6;border-radius:50%;cursor:pointer}.controls button:hover{border-color:var(--cyan);color:var(--cyan)}.counter{position:absolute;left:22px;bottom:24px;color:#697680;font-size:11px;letter-spacing:.1em}.hint{position:absolute;right:24px;top:20px;color:#52616a;font-size:10px}.notes{position:fixed;z-index:30;left:50%;bottom:16px;transform:translate(-50%,calc(100% + 40px));width:min(920px,calc(100% - 32px));max-height:38vh;overflow:auto;padding:24px 30px;background:rgba(12,15,16,.97);border:1px solid #354247;border-radius:12px;box-shadow:0 20px 80px #000;transition:transform .35s ease}.notes.open{transform:translate(-50%,0)}.notes h3{font-size:13px;color:var(--cyan);margin-bottom:8px}.notes p{font-size:14px;line-height:1.8;color:#ced5da}.speaker-note{display:none}
+    @media(max-width:900px){.slide{overflow:auto}.split,.split.even,.status-grid,.pilot{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.architecture{grid-template-columns:1fr 1fr}.screen.tall,.screen.hero-shot,.screen.detail{height:auto}.screen img{height:auto}.signal{display:none}.metric-row{grid-template-columns:1fr 1fr}.hint{display:none}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+    @media print{@page{size:16in 9in;margin:0}html,body{overflow:visible}.deck{height:auto}.slide{position:relative;width:16in;height:9in;opacity:1!important;visibility:visible!important;transform:none!important;page-break-after:always}.chrome,.notes{display:none}.source-note{bottom:18px}}
+  </style>
+  <link rel="stylesheet" href="effects.css" />
+  <link rel="stylesheet" href="gold.css" />
+  <link rel="stylesheet" href="readability.css" />
+  <link rel="stylesheet" href="update.css" />
+</head>
+<body>
+<main class="deck" aria-label="被看见项目路演演示文稿">
+  <section class="slide hero active" data-title="封面">
+    <div class="topline"><div class="brand"><img src="assets/favicon.svg" alt=""/><span>被看见<small>BE SEEN</small></span></div><span>产品路演 · 2026</span></div>
+    <div class="hero-copy">
+      <div class="eyebrow">商家搜索发现与证据探索</div>
+      <h1>让商家看见<br/>自己如何被看见</h1>
+      <p class="lead">从顾客需求出发，连接搜索摘要、原站正文与可追问的证据网络。</p>
+      <div class="cover-meta"><span class="pulse"></span><span>搜索发现 · 来源阅读 · 证据追问</span><span>新版历史案例版</span></div>
+    </div>
+    <div class="orb" aria-hidden="true"></div>
+    <aside class="speaker-note">大家好，今天介绍“被看见”。它帮助商家回答一个非常具体的问题：顾客按真实需求搜索时，结果里有没有我，如果有，是在哪个页面、以什么表达出现。我们不把一个模型回答当作结论，而是把查询、来源和可引用原文放在同一个证据链里。</aside>
+  </section>
+
+  <section class="slide" data-title="行业痛点">
+    <div class="topline"><span class="eyebrow">01 · 问题</span><span>可见度缺少可复查的解释</span></div>
+    <div class="content split">
+      <div class="stack copy">
+        <h2>商家知道流量变了<br/>却不知道原因在哪</h2>
+        <p class="lead">搜索、内容和 AI 推荐共同影响顾客判断。商家真正缺少的，是能回到原始来源的观察工具。</p>
+        <div class="problem-lines">
+          <div class="problem"><b>01</b><p>顾客问题分散，难以形成稳定的查询集合</p></div>
+          <div class="problem"><b>02</b><p>“出现过”与“被推荐”经常被混为一谈</p></div>
+          <div class="problem"><b>03</b><p>建议离开原文证据，复测时无法判断变化</p></div>
+        </div>
+      </div>
+      <div class="signal" aria-label="分散信号汇聚为一个可观察问题"><span class="s1">顾客如何描述需求</span><span class="s2">哪些页面提到商家</span><span class="s3">内容强调了什么卖点</span><strong>?</strong></div>
+    </div>
+    <aside class="speaker-note">现有工具常给出一个分数或一句总结，但商家很难知道结论从哪里来。这里至少有三类断点：顾客会用许多不同表达搜索，名称出现不等于推荐入选，内容建议也需要回到原始证据。被看见首先解决可复查性，再谈优化。</aside>
+  </section>
+
+  <section class="slide" data-title="产品定位">
+    <div class="topline"><span class="eyebrow">02 · 产品</span><span>从问题到证据的连续工作流</span></div>
+    <div class="content stack">
+      <p class="big-quote">把每一次“被发现”，拆成可以验证的查询、来源与原文。</p>
+      <div class="flow">
+        <div class="flow-step"><b>01</b><h3>认识商家</h3><p>用城市、品类和真实服务建立上下文，资料由商家确认。</p></div>
+        <div class="flow-step"><b>02</b><h3>顾客需求检索</h3><p>最多 5 条不含品牌名的需求查询，品牌资料另行补充。</p></div>
+        <div class="flow-step"><b>03</b><h3>来源阅读</h3><p>沿信息缺口补查文章，每轮最多读取 3 个来源，分别保存摘要与正文。</p></div>
+        <div class="flow-step"><b>04</b><h3>证据追问</h3><p>按查询展开网络，沿原文继续提问，再用原查询检验内容变化。</p></div>
+      </div>
+    </div>
+    <aside class="speaker-note">新版把顾客需求和文章研究分开。系统先生成最多五条不含品牌名的需求查询，品牌资料单独补充。检索没有找到明确文章线索时，再沿缺口补查。每轮最多读取三个公开来源，把摘要、正文和读取状态分别保存。用户最终沿原文追问，也能保留同一组查询做复测。</aside>
+  </section>
+
+  <section class="slide" data-title="品牌体验">
+    <div class="topline"><span class="eyebrow">03 · 体验入口</span><span>公开落地页</span></div>
+    <div class="content split even">
+      <div class="stack copy"><h2>一次发现<br/>连接真实线索</h2><p class="lead">蓝金粒子随交互聚合，入口聚焦一个具体问题：顾客搜索时，结果里有没有你。</p><div class="rule"></div><p class="kicker">从公开首页进入对话，继续查看需求曝光、文章追查与正文引用。</p></div>
+      <figure class="screen hero-shot" data-label="新版项目 · 首页"><img src="assets/01-landing.png" alt="更新版项目的公开首页与蓝金粒子视觉"/></figure>
+    </div>
+    <aside class="speaker-note">首页承担的任务不是解释所有能力，而是建立正确预期。粒子视觉代表分散的公开线索，左侧文案把行动聚焦到一个问题：你的商家在哪里被看见。用户从这里进入对话，不需要先理解复杂指标。</aside>
+  </section>
+
+  <section class="slide" data-title="对话建档">
+    <div class="topline"><span class="eyebrow">04 · 对话建档</span><span>可编辑资料代替强制向导</span></div>
+    <div class="content split">
+      <div class="stack copy"><h2>对话中发起<br/>也能恢复历史探索</h2><p class="lead">名称、城市与品类建立最小上下文。报告和后续追问保存在同一个观察空间。</p><div class="evidence-list"><div class="evidence-item"><span class="num">A</span><div><h3>资料由用户确认</h3><p>搜索补充信息经用户采纳后，才进入后续档案。</p></div></div><div class="evidence-item"><span class="num">B</span><div><h3>历史记录可恢复</h3><p>保留查询、回答与报告版本，重试和失败状态也有记录。</p></div></div></div></div>
+      <figure class="screen tall" data-label="新版项目 · 已保存对话"><img src="assets/06-chat-history.png" alt="更新版八合里历史对话、蓝金粒子与已生成报告卡片"/></figure>
+    </div>
+    <aside class="speaker-note">第一次使用只需商家名称、城市和主营品类。更细的标签、地址和别名按需补充。这里展示资料包中的八合里历史会话，已有报告可直接恢复。失败消息和重试状态同样保留，用户能知道哪些步骤完成、哪些仍需处理。</aside>
+  </section>
+
+  <section class="slide" data-title="曝光与宣传">
+    <div class="topline"><span class="eyebrow">05 · 核心视图</span><span>逐查询查看名称提及与宣传线索</span></div>
+    <div class="content split even">
+      <figure class="screen tall" data-label="八合里 · 已保存历史报告"><img src="assets/04-exposure.png" alt="八合里牛肉火锅历史报告：五条需求查询中三条出现目标名称"/></figure>
+      <div class="stack copy"><h2>先看需求曝光<br/>再追查宣传表达</h2><p class="lead">八合里历史报告按查询保留名称提及、首次位置、搜索摘要与文章线索。</p><div class="metric-row"><div class="metric"><strong>3 / 5</strong><span>需求查询出现目标名称</span><small>只统计本次标题与摘要</small></div><div class="metric"><strong>55</strong><span>去重来源页面</span><small>涵盖全部 7 条查询</small></div></div><p class="caption">历史报告 v2：5 条需求、1 条品牌补充、1 条文章追查。补充查询单列，正文不会反向改变摘要曝光。</p></div>
+    </div>
+    <aside class="speaker-note">八合里这份历史报告共有七条查询，其中五条是顾客需求，另外各有一条品牌资料和文章追查。五条需求中三条在标题或摘要里出现名称。整个任务保存五十五个去重来源。这里的三比五只描述这批固定查询，不代表真实流量、全网知名度或已确认的门店身份。</aside>
+  </section>
+
+  <section class="slide" data-title="证据网络">
+    <div class="topline"><span class="eyebrow">06 · 证据网络</span><span>查询、来源与商家名称之间的关系</span></div>
+    <div class="content split">
+      <div class="stack copy case-copy"><span class="case-eyebrow">新版项目历史报告 · 2026.10.25</span><h2>八合里 · 深圳<br/>沿查询展开证据</h2><p class="lead">同一来源合并展示，保留各次查询的位置、摘要与引用。点击查询或节点继续查看。</p><div class="case-stats"><span><b>7</b>条查询</span><span><b>55</b>个来源</span><span><b>8</b>个名称</span></div><div class="case-queries" aria-label="八合里历史查询"></div><p class="caption">直接读取更新项目的历史快照与后端图结构。70 个节点、88 条关系；支持全景和按查询展开。</p><a class="case-export" href="assets/history-case.json" download>保存历史案例 JSON ↗</a></div>
+      <figure class="screen detail case-figure"><img src="assets/history-network.png" alt="八合里历史报告的查询、来源和名称提及网络"/></figure>
+    </div>
+    <aside class="speaker-note">这里展示更新资料包中八合里牛肉火锅的已完成报告。七条查询连接五十五个去重来源和八个商家名称，合计七十个节点、八十八条关系。这些关系直接来自新版后端，不再手工拼接示意数据。点击左侧查询可查看摘要和引用，也可以收起全图，按问题逐步展开。同一 URL 只显示一个来源节点，原始查询位置仍分别保存。</aside>
+  </section>
+
+  <section class="slide" data-title="正文阅读">
+    <div class="topline"><span class="eyebrow">07 · 来源阅读</span><span>搜索摘要与原站正文分别保存</span></div>
+    <div class="content split even">
+      <div class="article-proof"><figure class="screen article-status-shot" data-label="新版项目 · 来源读取状态"><img src="assets/10-reading-status.png" alt="新版页面中已读取正文片段、2026年10月25日14:38:07读取时间和展开原文入口"/></figure><div class="article-proof-copy"><span class="eyebrow">已保存来源的正文节选</span><h3>深圳自助火锅探店指南</h3><blockquote>“本指南基于2023-2024年深圳本地餐饮数据和探店经验”</blockquote><p>内容自身的时间口径也保留下来，复查时可以区分历史文章与当前信息。</p><a href="https://www.rlut.cn/news/shen-zhen-zi-zhu-huo-guo-tan-dian-zhi-nan-ren-jun-bai-yuan-nei-chang-chi-xin-xian-niu-rou-hai-xian-y.html" target="_blank" rel="noopener noreferrer">查看原始来源 ↗</a></div></div>
+      <div class="stack copy"><h2>原文读到了什么<br/>状态和时间都可查</h2><p class="lead">每轮最多读取 3 个来源，保留成功、失败、截断状态与内容哈希。引用必须出现在保存的片段里。</p><div class="metric-row"><div class="metric"><strong>1 / 3</strong><span>本次正文读取成功</span><small>3 个 URL 尝试，1 个成功</small></div><div class="metric"><strong>3,946</strong><span>成功保存的正文字符</span><small>14:38:07 读取</small></div></div><p class="caption">正文中的名称不计入摘要曝光。下一轮追问可继续使用已保存证据，普通追问不会修改旧报告。</p></div>
+    </div>
+    <aside class="speaker-note">新版增加了真正的来源阅读。搜索摘要和原站正文分开保存，每轮最多读取三个来源，不绕过登录或验证。八合里这次历史任务尝试三个 URL，成功读取一个，保存三千九百四十六个字符和读取时间。其他来源的失败状态也保留。用户可以展开保存的原文，再沿这份证据追问，正文里的提及不会改写先前的摘要曝光记录。</aside>
+  </section>
+
+  <section class="slide" data-title="可信机制">
+    <div class="topline"><span class="eyebrow">08 · 可信机制</span><span>检索、阅读、引用和核验各有边界</span></div>
+    <div class="content split even">
+      <div class="stack"><h2>每个结论<br/>都经过四道约束</h2><p class="lead">检索先完成，内容分析随后进行。无法支持的内容不作为事实展示。</p></div>
+      <div class="evidence-list"><div class="evidence-item"><span class="num">01</span><div><h3>查询口径分开</h3><p>顾客需求、品牌资料与文章追查分别统计。</p></div></div><div class="evidence-item"><span class="num">02</span><div><h3>摘要与正文分开</h3><p>正文保存读取状态、时间、哈希与截断标记。</p></div></div><div class="evidence-item"><span class="num">03</span><div><h3>引用与回答核验</h3><p>原文逐字支持引用，独立模型继续审核回答。</p></div></div><div class="evidence-item"><span class="num">04</span><div><h3>失败仍然可见</h3><p>计划、尝试与成功分别呈现，未完成不算未曝光。</p></div></div></div>
+    </div>
+    <aside class="speaker-note">新版把可信边界进一步放进流程：需求查询和补充查询分别记录，摘要和正文分别保存。原文片段必须逐字支持引用，回答还经过独立模型审核。页面明确显示计划、尝试和成功数量，失败不会被包装成未曝光，正文也不会反向改写搜索摘要的名称提及。</aside>
+  </section>
+
+  <section class="slide" data-title="技术架构">
+    <div class="topline"><span class="eyebrow">09 · 技术架构</span><span>可恢复、可审计的异步执行</span></div>
+    <div class="content stack">
+      <h2>浏览器关闭，任务仍然继续</h2>
+      <div class="architecture">
+        <div class="arch"><b>INTERFACE</b><h3>React 前端</h3><p>公开落地页、对话空间、报告和三维证据网络。</p><small>Vite · Three.js · 3d-force-graph · ECharts</small></div>
+        <div class="arch"><b>API</b><h3>FastAPI</h3><p>会话、幂等提交、历史报告、合并图谱与 JSON 导出。</p><small>12 小时会话令牌</small></div>
+        <div class="arch"><b>WORKER</b><h3>检索与来源阅读</h3><p>搜索、正文读取和模型核验分步执行，独立记录预算与检查点。</p><small>每轮最多读 3 个 URL · 重启续跑</small></div>
+        <div class="arch"><b>EVIDENCE</b><h3>SQLite 证据快照</h3><p>保存摘要、正文状态、哈希、提示词与模型输入输出。</p><small>同一 URL 去重，原始位置保留</small></div>
+      </div>
+    </div>
+    <aside class="speaker-note">前端负责对话、报告和可交互图谱。FastAPI 提供会话和历史报告，Worker 分步处理搜索、正文阅读与模型核验。阅读只使用已保存的来源 URL，并限制预算和页面大小。SQLite 保存检查点、内容哈希与引用记录，浏览器关闭不会删除任务。当前仍为单工作空间版本。</aside>
+  </section>
+
+  <section class="slide" data-title="验证结果">
+    <div class="topline"><span class="eyebrow">10 · 验证</span><span>本次测试结果与资料包历史记录</span></div>
+    <div class="content status-grid">
+      <div class="stack">
+        <div class="proof"><strong>96</strong><h3>项后端自动化测试通过</h3><p>本次运行更新版测试，覆盖正文引用、读取预算、URL 边界、图谱去重与任务恢复。</p></div>
+        <div class="proof"><strong>7 / 7</strong><h3>八合里历史查询全部成功</h3><p>5 条需求、1 条品牌资料、1 条文章追查。历史任务记录为已完成。</p></div>
+        <div class="metric-row"><div class="metric"><strong>2</strong><span>已保存会话</span><small>资料包清单</small></div><div class="metric"><strong>7</strong><span>报告产物</span><small>含失败与部分完成</small></div><div class="metric"><strong>17</strong><span>历史消息</span><small>资料包清单</small></div><div class="metric"><strong>181</strong><span>任务检查点</span><small>保留原始记录</small></div></div>
+      </div>
+      <div class="open-work"><div class="eyebrow">已保存与待验证</div><h2>已有历史证据<br/>继续验证质量</h2><ul><li>已完成：历史回放和页面截图<span>本次读取副本，保留原数据库</span></li><li>待完善：三类真实商家对照<span>信息丰富、内容稀疏、同名混淆</span></li><li>待复验：原站读取质量与部署<span>本次未重新调用外部搜索或模型</span></li></ul></div>
+    </div>
+    <div class="source-note">来源：更新资料包 manifest.json、八合里历史报告和本次 96 项后端测试</div>
+    <aside class="speaker-note">本次运行更新项目的九十六项后端测试，全部通过。资料包有两个会话、七份报告、十七条消息和一百八十一个检查点，失败和部分完成的记录原样保留。选中的八合里报告七条查询全部成功。本次只读取历史副本并截图，没有重新调用外部搜索和模型。下一步仍需扩大商家画像覆盖，复验来源阅读质量与部署。</aside>
+  </section>
+
+  <section class="slide" data-title="合作路径">
+    <div class="topline"><span class="eyebrow">11 · 下一步</span><span>用真实商家完成可复核试点</span></div>
+    <div class="content pilot">
+      <div class="stack"><h2>一次试点<br/>回答三个问题</h2><div class="pilot-path"><div class="pilot-step"><b>01</b><div><h3>在哪里出现</h3><p>冻结查询集合，记录每条需求下的名称提及与来源。</p></div></div><div class="pilot-step"><b>02</b><div><h3>内容如何表达</h3><p>提取公开摘要中的卖点、内容形式和行动引导。</p></div></div><div class="pilot-step"><b>03</b><div><h3>调整后是否变化</h3><p>保留原查询，在公开内容更新后重新测量并对照证据。</p></div></div></div></div>
+      <div class="deliverable"><div class="eyebrow">建议试点交付</div><h3>一个品类，三种商家画像</h3><p>完整操作录屏<br/><small>从建档到来源打开</small></p><p>查询与证据 JSON<br/><small>可审计、可归档、可复测</small></p><p>内容机会清单<br/><small>每条建议带来源和复测方法</small></p><p>失败与误判记录<br/><small>作为下一轮产品改进输入</small></p></div>
+    </div>
+    <aside class="speaker-note">下一步最有价值的不是扩大功能列表，而是完成一个真实、可复核的试点。我们建议选择一个品类，覆盖信息丰富、内容稀疏和同名混淆三种画像。交付不只是一份报告，还包括录屏、证据 JSON、内容机会和失败记录。</aside>
+  </section>
+
+  <section class="slide" data-title="结尾">
+    <div class="topline"><div class="brand"><img src="assets/favicon.svg" alt=""/><span>被看见<small>BE SEEN</small></span></div><span>谢谢</span></div>
+    <div class="content closing-copy"><img class="closing-mark" src="assets/favicon.svg" alt=""/><h1>让每一次发现<br/>都有来处</h1><p class="lead">搜索公开线索，连接可核验证据，找到下一次内容行动。</p><div class="closing-line"></div></div>
+    <aside class="speaker-note">被看见希望把商家对搜索和 AI 推荐的焦虑，变成一组可以观察、复查和复测的证据。我们从“在哪里被看见”开始，也诚实记录“哪里还没有找到”。谢谢。</aside>
+  </section>
+</main>
+
+<div class="chrome" aria-hidden="true"><div class="progress"></div><div class="counter"></div><div class="hint">← → 翻页 · F 全屏 · N 讲稿</div><div class="controls"><button type="button" data-action="prev" aria-label="上一页">‹</button><button type="button" data-action="notes" aria-label="显示讲稿">N</button><button type="button" data-action="full" aria-label="全屏">⛶</button><button type="button" data-action="next" aria-label="下一页">›</button></div></div>
+<aside class="notes" aria-live="polite"><h3>本页讲稿</h3><p></p></aside>
+<script>
+  (()=>{
+    const slides=[...document.querySelectorAll('.slide')], progress=document.querySelector('.progress'), counter=document.querySelector('.counter'), notes=document.querySelector('.notes'), noteText=notes.querySelector('p');
+    let index=Math.max(0,Math.min(slides.length-1,Number(location.hash.slice(1))-1||0));
+    function show(next,push=true){index=(next+slides.length)%slides.length;slides.forEach((s,i)=>{s.classList.toggle('active',i===index);s.classList.toggle('prev',i<index)});progress.style.width=((index+1)/slides.length*100)+'%';counter.textContent=String(index+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0')+'  '+slides[index].dataset.title;noteText.textContent=slides[index].querySelector('.speaker-note')?.textContent||'';if(push)history.replaceState(null,'','#'+(index+1));document.title=slides[index].dataset.title+' · 被看见路演'}
+    function full(){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.()}
+    function toggleNotes(){notes.classList.toggle('open')}
+    document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select')||(e.key===' '&&e.target.closest('button,a')))return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(index+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(index-1)}else if(e.key.toLowerCase()==='f')full();else if(e.key.toLowerCase()==='n')toggleNotes();else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1)})
+    document.querySelector('.controls').addEventListener('click',e=>{const a=e.target.closest('button')?.dataset.action;if(a==='next')show(index+1);if(a==='prev')show(index-1);if(a==='full')full();if(a==='notes')toggleNotes()})
+    window.addEventListener('hashchange',()=>{const n=Number(location.hash.slice(1));if(Number.isFinite(n)&&n>=1&&n<=slides.length&&n-1!==index)show(n-1,false)})
+    let sx=0,swipe=true;document.addEventListener('touchstart',e=>{sx=e.changedTouches[0].clientX;swipe=!e.target.closest('.live-network,.network-details,.case-source-list')},{passive:true});document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(swipe&&Math.abs(d)>50)show(index+(d<0?1:-1))},{passive:true});
+    show(index,false)
+  })()
+</script>
+<script src="assets/effects.js" defer></script>
+</body>
+</html>
